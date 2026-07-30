@@ -1,0 +1,132 @@
+<?php
+  $page_title = 'Home Page';
+  require_once('includes/load.php');
+  if (!$session->isUserLoggedIn(true)) { redirect('index.php', false);}
+  
+  // Fetch required data for dashboard panels
+  $products_sold   = find_higest_saleing_product('10');
+  $recent_sales    = find_recent_sale_added('5');
+  $recent_products = find_recent_product_added('5');
+?>
+<?php include_once('layouts/header.php'); ?>
+<div class="row">
+  <div class="col-md-12">
+    <?php echo display_msg($msg); ?>
+  </div>
+ <div class="col-md-12">
+    <div class="panel">
+      
+    </div>
+  </div>
+  <div class="row">
+   <div class="col-md-4">
+     <div class="panel panel-default">
+       <div class="panel-heading">
+         <strong>
+           <span class="glyphicon glyphicon-th"></span>
+           <span>Highest Saleing Products</span>
+         </strong>
+       </div>
+       <div class="panel-body">
+         <table class="table table-striped table-bordered table-condensed">
+          <thead>
+           <tr>
+             <th>Title</th>
+             <th>Total Sold</th>
+             <th>Total Quantity</th>
+           </tr>
+          </thead>
+          <tbody>
+            <?php if(!empty($products_sold)): ?>
+              <?php foreach ($products_sold as  $product_sold): ?>
+                <tr>
+                  <td><?php echo remove_junk(first_character($product_sold['name'])); ?></td>
+                  <td><?php echo (int)$product_sold['totalSold']; ?></td>
+                  <td><?php echo (int)$product_sold['totalQty']; ?></td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr><td colspan="3" class="text-center">No data available</td></tr>
+            <?php endif; ?>
+          </tbody>
+         </table>
+       </div>
+     </div>
+   </div>
+   <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>
+            <span class="glyphicon glyphicon-th"></span>
+            <span>LATEST SALES</span>
+          </strong>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-bordered table-condensed">
+       <thead>
+         <tr>
+           <th class="text-center" style="width: 50px;">#</th>
+           <th>Product Name</th>
+           <th>Date</th>
+           <th>Total Sale</th>
+         </tr>
+       </thead>
+       <tbody>
+         <?php if(!empty($recent_sales)): ?>
+           <?php foreach ($recent_sales as  $recent_sale): ?>
+           <tr>
+             <td class="text-center"><?php echo count_id();?></td>
+             <td>
+              <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">
+               <?php echo remove_junk(first_character($recent_sale['name'])); ?>
+             </a>
+             </td>
+             <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
+             <td>₱<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
+          </tr>
+         <?php endforeach; ?>
+         <?php else: ?>
+           <tr><td colspan="4" class="text-center">No sales found</td></tr>
+         <?php endif; ?>
+       </tbody>
+     </table>
+    </div>
+   </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>
+          <span class="glyphicon glyphicon-th"></span>
+          <span>Recently Added Products</span>
+        </strong>
+      </div>
+      <div class="panel-body">
+        <div class="list-group">
+      <?php if(!empty($recent_products)): ?>
+        <?php foreach ($recent_products as  $recent_product): ?>
+            <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo (int)$recent_product['id'];?>">
+                <h4 class="list-group-item-heading">
+                 <?php if($recent_product['media_id'] === '0'): ?>
+                    <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
+                  <?php else: ?>
+                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $recent_product['image'];?>" alt="" />
+                <?php endif;?>
+                <?php echo remove_junk(first_character($recent_product['name']));?>
+                  <span class="label label-warning pull-right">
+                 ₱<?php echo (int)$recent_product['sale_price']; ?>
+                  </span>
+                </h4>
+                <span class="list-group-item-text pull-right">
+                <?php echo remove_junk(first_character($recent_product['categorie'])); ?>
+              </span>
+          </a>
+      <?php endforeach; ?>
+      <?php else: ?>
+        <span class="list-group-item text-center">No products found</span>
+      <?php endif; ?>
+    </div>
+  </div>
+ </div>
+</div>
+<?php include_once('layouts/footer.php');
