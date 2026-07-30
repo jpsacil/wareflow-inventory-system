@@ -108,4 +108,3 @@ public function while_loop($loop){
 
 $db = new MySqli_DB();
 
-?>
