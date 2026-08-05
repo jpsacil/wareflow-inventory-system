@@ -1,0 +1,27 @@
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.local
+.env.*
+!.env.example
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+cache/
+
+# PHP / Composer
+vendor/
+composer.lock
+
+# Uploads (keep the folders, ignore generated files)
+uploads/products/*
+!uploads/products/.gitkeep
+uploads/users/*
+!uploads/users/.gitkeep

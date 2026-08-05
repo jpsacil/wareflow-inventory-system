@@ -1,40 +1,36 @@
-<?php include_once('includes/load.php'); ?>
 <?php
-$req_fields = array('username','password' );
-validate_fields($req_fields);
-$username = remove_junk($_POST['username']);
-$password = remove_junk($_POST['password']);
+  require_once('includes/load.php');
 
-  if(empty($errors)){
-
-    $user = authenticate_v2($username, $password);
-
-        if($user):
-           //create session with id
-           $session->login($user['id']);
-           //Update Sign in time
-           updateLastLogIn($user['id']);
-           // redirect user to group home page by user level
-           if($user['user_level'] === '1'):
-             $session->msg("s", "Hello ".$user['username'].", Welcome to WAREFLOW.");
-             redirect('admin.php',false);
-           elseif ($user['user_level'] === '2'):
-              $session->msg("s", "Hello ".$user['username'].", Welcome to WAREFLOW.");
-             redirect('special.php',false);
-           else:
-              $session->msg("s", "Hello ".$user['username'].", Welcome to WAREFLOW.");
-             redirect('home.php',false);
-           endif;
-
-        else:
-          $session->msg("d", "Sorry Username/Password incorrect.");
-          redirect('index.php',false);
-        endif;
-
-  } else {
-
-     $session->msg("d", $errors);
-     redirect('login_v2.php',false);
+  if(!isset($_POST['username'], $_POST['password'])) {
+    $session->msg('d', 'Please enter username and password.');
+    redirect('login.php', false);
   }
 
+  $req_fields = array('username','password');
+  validate_fields($req_fields);
+
+  $username = remove_junk($_POST['username']);
+  $password = remove_junk($_POST['password']);
+
+  if(empty($errors)) {
+    $user = authenticate_v2($username, $password);
+    if($user) {
+      $session->login($user['id']);
+      updateLastLogIn($user['id']);
+      $session->msg('s', 'Hello ' . $user['username'] . ', Welcome to WAREFLOW.');
+      if($user['user_level'] === '1') {
+        redirect('admin.php', false);
+      } elseif($user['user_level'] === '2') {
+        redirect('special.php', false);
+      } else {
+        redirect('home.php', false);
+      }
+    } else {
+      $session->msg('d', 'Sorry Username/Password incorrect.');
+      redirect('login.php', false);
+    }
+  } else {
+     $session->msg('d', $errors);
+     redirect('login.php', false);
+  }
 ?>

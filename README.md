@@ -48,10 +48,11 @@ Before installing the project, make sure the following are available on your mac
 
 - PHP 7.4 or newer
 - MySQL
-- Apache or XAMPP
+- Apache or XAMPP (optional)
+- Docker Desktop or Docker Engine with Docker Compose
 - A web browser
 
-For Windows users, XAMPP is the easiest option for local development.
+For Windows users, Docker Desktop or XAMPP are the easiest options for local development.
 
 ---
 
@@ -67,7 +68,25 @@ git clone https://github.com/your-username/wareflow-inventory-system.git
 
 ### 3. Modify the includes/config.php and change the variables to match your host, database, username and passwords.
 
-### 4. Change all Folder permission inside uploads folder either add them to group call `www` if available or `777`.
+### 4. Change all folder permissions inside the uploads folder; use the webserver group or `777` if needed.
+
+### 5. Run locally with Docker Compose (recommended)
+
+```bash
+cd wareflow-inventory-system
+docker compose up -d
+```
+
+Then open `http://localhost:8000` in your browser.
+
+### 6. Login using one of the default demo accounts:
+
+   Administrator        | Special User           | Default User
+   ---------------------| -----------------------| -------------------
+   **Username** : admin | **Username** : special | **Username** : user
+   **Password** : admin | **Password** : special | **Password** : user
+
+### 7. Good luck!
 
 ### 5. Then loging by typing **username** and **password**:
 
@@ -79,7 +98,47 @@ git clone https://github.com/your-username/wareflow-inventory-system.git
 
 ### 6. Good luck!  
 
-- - - -
+---
+
+## Deploying to Railway (recommended free host)
+
+Railway is a good choice for hosting this PHP + MySQL app because it supports Docker and gives you a public URL.
+
+### Steps to deploy
+
+1. Sign up at https://railway.app/ and install the Railway CLI if you want.
+2. Create a new project and choose **Deploy from GitHub** or connect your repository.
+3. In Railway, add an environment with the following variables:
+   - `DB_HOST` = `mysql` (or the service hostname given by Railway)
+   - `DB_USER` = `root`
+   - `DB_PASS` = `rootpass`
+   - `DB_NAME` = `oswa_inv`
+4. Railway can use `docker-compose.yml` directly. If it asks, point it at this repository and let it build the `web` and `db` services.
+5. Add the SQL file `oswa_inv.sql` to the project (already present in this repo) so the database initializes correctly.
+6. After deploy, Railway provides a live URL. Paste that URL into the `Live Demo` section below.
+
+### Notes
+
+- Railway's free tier is generally enough for a small demo project.
+- If the database service hostname differs from `mysql`, update `DB_HOST` accordingly in Railway.
+- The app already supports env-based database settings in `includes/config.php`.
+
+---
+
+## Live Demo
+
+A live version of this app can be hosted at a public URL once deployed. Replace the placeholder below with your hosted demo link after deployment:
+
+- Live demo: https://your-live-demo-url.example.com
+
+### Test account for demo
+
+Use this test account to sign in and review the app functionality:
+
+- **Username:** admintest
+- **Password:** admin
+
+---
 
 ## DON'T FORGET TO GIVE US FEEDBACK
 
