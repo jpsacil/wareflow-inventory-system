@@ -125,11 +125,11 @@ Railway is a good choice for hosting this PHP + MySQL app because it supports Do
 
 ---
 
-## Live Demo
+### Contact and Demo
 
-A live version of this app can be hosted at a public URL once deployed. Replace the placeholder below with your hosted demo link after deployment:
+If you want to see a live demo, contact me and I can share the hosted version directly.
 
-- Live demo: https://your-live-demo-url.example.com
+- **Contact:** [John Paul Sacil](https://www.facebook.com/jhaypee.sacil)
 
 ### GitHub Actions Docker deployment
 
@@ -162,13 +162,3 @@ Use this test account to sign in and review the app functionality:
 
 - **Username:** admintest
 - **Password:** admin
-
----
-
-## DON'T FORGET TO GIVE US FEEDBACK
-
-- - - -
-
-Like  [@OSWA](https://www.facebook.com/oswapp) on Facebook for more project.
-
-Don't forget to visit [oswapp.com](http://oswapp.com "OSWA")
