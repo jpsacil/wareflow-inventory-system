@@ -131,6 +131,31 @@ A live version of this app can be hosted at a public URL once deployed. Replace 
 
 - Live demo: https://your-live-demo-url.example.com
 
+### GitHub Actions Docker deployment
+
+This repo includes a workflow at `.github/workflows/docker-build-publish.yml` that builds the Docker image and pushes it to GitHub Container Registry whenever `master` is updated.
+
+To enable it:
+
+1. Go to your GitHub repository settings > Actions > General.
+2. Allow GitHub Actions if it is disabled.
+3. Make sure the repository has GitHub Packages/GHCR permissions enabled.
+
+After the workflow runs, the Docker image will be available at:
+
+- `ghcr.io/<your-github-username>/wareflow-inventory-system:latest`
+- `ghcr.io/<your-github-username>/wareflow-inventory-system:<commit-sha>`
+
+### Use the published image
+
+If you want to deploy the published image elsewhere, update `docker-compose.yml` or your deployment platform to use:
+
+```yaml
+image: ghcr.io/<your-github-username>/wareflow-inventory-system:latest
+```
+
+Then provide the same environment variables from `docker-compose.yml`.
+
 ### Test account for demo
 
 Use this test account to sign in and review the app functionality:
